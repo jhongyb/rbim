@@ -176,7 +176,7 @@
         </div>
 
         <br>
-            <div class="row">
+        <div class="row">
             <div class="col"><b>Q54</b> Do you have any female HH member who died in the past 12 months? Hos old is she and what is the cause of her death </div>
             <div class="col">
                 <div class="row">
@@ -188,6 +188,80 @@
 
             </div>
         </div>
+
+        <br>
+        <div class="row">
+            <div class="col"><b>Q55</b>
+                Do you have a child HH member below 5 years old who died in the past 12 months? How old is she/he? What is the cause of her/his death?
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col">{{form.Q55AGE|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{form.Q55SEX|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{form.Q55COD|as_crispy_field}}</div>
+                </div>
+            </div>
+        </div>
+
+         <br>
+        <div class="row">
+            <div class="col"><b>Q56</b>
+                What are the common diseases that causes death in this barangay?
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col">{{form.q561|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{form.q562|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{form.q563|as_crispy_field}}</div>
+                </div>
+            </div>
+        </div>
+
+        
+         <br>
+        <div class="row">
+            <div class="col"><b>Q57</b>
+                What do you think are the primary needs of this barangay?
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col">{{form.q571|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{form.q572|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{form.q573|as_crispy_field}}</div>
+                </div>
+            </div>
+        </div>
+
+                 <br>
+        <div class="row">
+            <div class="col"><b>Q58</b>
+                Where does your household intend to stay five years from now?
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col">{{form.q58b|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{form.q58m|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{form.q58p|as_crispy_field}}</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="tab-pane fade show" id="tab5" role="tabpanel" aria-labelledby="tab4-tab">

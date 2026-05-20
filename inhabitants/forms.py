@@ -23,7 +23,9 @@ class HouseholdForm(forms.ModelForm):
             'datenextvisit2':'',
             'interviewer2':'',
             
-            'Q45':'', 'Q47':'','Q48':'','Q49':'','Q50A':'','Q50B':'','Q51':'','Q52':'','Q46':'','Q53':'','Q54AGE':'Age','Q54COD':'Cause of Death',
+            'Q45':'', 'Q47':'','Q48':'','Q49':'','Q50A':'','Q50B':'','Q51':'','Q52':'','Q46':'','Q53':'','Q54AGE':'','Q54COD':'',
+            'Q55AGE':'','Q55SEX':'','Q55COD':'','q561':'','q562':'','q563':'','q571':'','q572':'','q573':''
+            ,'q58b':'','q58m':'','q58p':''
             }
         widgets={
             'dateencoded':forms.DateInput(attrs={'type':'date','class':'form-control'}),
@@ -34,7 +36,25 @@ class HouseholdForm(forms.ModelForm):
             'timestart2':forms.TimeInput(attrs={'type':'time','class':'form-control'}),
             'timeend2':forms.TimeInput(attrs={'type':'time','class':'form-control'}),
             'dateofvisit2':forms.DateInput(attrs={'type':'date','class':'form-control'}),
-            'datenextvisit2':forms.DateInput(attrs={'type':'date','class':'form-control'})
+            'datenextvisit2':forms.DateInput(attrs={'type':'date','class':'form-control'}),
+            'Q54AGE':forms.TextInput(attrs={'placeholder':'Age'}),
+            'Q54COD':forms.TextInput(attrs={'placeholder':'Cause of Death'}),
+            'Q55AGE':forms.TextInput(attrs={'placeholder':'Age'}),
+            'Q55SEX':forms.TextInput(attrs={'placeholder':'Sex'}),
+            'Q55COD':forms.TextInput(attrs={'placeholder':'Cause of Death'}),
+
+            'q561':forms.TextInput(attrs={'placeholder':'1'}),
+            'q562':forms.TextInput(attrs={'placeholder':'2'}),
+            'q563':forms.TextInput(attrs={'placeholder':'3'}),
+            'q571':forms.TextInput(attrs={'placeholder':'1'}),
+            'q572':forms.TextInput(attrs={'placeholder':'2'}),
+            'q573':forms.TextInput(attrs={'placeholder':'3'}),
+
+            'q58b':forms.TextInput(attrs={'placeholder':'Barangay'}),
+            'q58m':forms.TextInput(attrs={'placeholder':'Municipality'}),
+            'q58p':forms.TextInput(attrs={'placeholder':'Province'}),
+            
+
 
         }
 class InhabitantsForm(forms.ModelForm):
@@ -71,7 +91,7 @@ class InhabitantsForm(forms.ModelForm):
             'q22b':forms.TextInput(attrs={'class':'form-control','placeholder':'No of still living'}),
             'q23':forms.Select(attrs={'class':'form-select'}),
             'q24':forms.Select(attrs={'class':'form-select'}),
-            'q25a':forms.TextInput(attrs={'class':'form-control'}),
+            'q25a':forms.Select(attrs={'class':'form-select'}),
             'q25b':forms.TextInput(attrs={'class':'form-control'}),
             'q26':forms.Select(attrs={'class':'form-select'}),
             'q27':forms.Select(attrs={'class':'form-select'}),
@@ -101,6 +121,16 @@ class InhabitantsForm(forms.ModelForm):
             'q42b':forms.Select(attrs={'class':'form-select'}),
             'q43':forms.TextInput(attrs={'class':'form-control'}),
             'q44':forms.Select(attrs={'class':'form-select'}),
+            'q45':forms.Select(attrs={'class':'form-select'}),
+            'q46':forms.Select(attrs={'class':'form-select'}),
+            'q47':forms.Select(attrs={'class':'form-select'}),
+            'q48':forms.Select(attrs={'class':'form-select'}),
+            'q49':forms.Select(attrs={'class':'form-select'}),
+            'q50a':forms.Select(attrs={'class':'form-select'}),
+            'q50b':forms.Select(attrs={'class':'form-select'}),
+            'q51':forms.Select(attrs={'class':'form-select'}),
+            'q52':forms.Select(attrs={'class':'form-select'}),
+
 
 
         }

@@ -42,22 +42,26 @@ class Households(models.Model):
   
     #HOUSEHOLD QUESTIONS
     Q45=models.IntegerField(blank=True,null=True,choices=[
-          ('1','Rent-free without consent of owner'),('2','Rent-free with consent of owner'),('3','Rented'),('4','Owned/being amortized')])
+          ('1','1 Rent-free without consent of owner'),('2','2 Rent-free with consent of owner'),('3','3 Rented'),('4','4 Owned/being amortized')])
     Q46=models.IntegerField(blank=True,null=True,choices=[
-          ('1','Rent-free without consent of owner'),('2','Rent-free with consent of owner'),('3','Rented'),('4','Owned/being amortized')])
+          ('1','1 Rent-free without consent of owner'),('2','2 Rent-free with consent of owner'),('3','3 Rented'),('4','4 Owned/being amortized')])
     Q47=models.IntegerField(blank=True,null=True,choices=[
-         ('0','None'),('1','Oil(vegetable,animal,others)'),('2','Liquefied petroluem gas(LPG)'),('3','Kerosene(gaas)'),('4','Electricity'),('5','Others')])
+         ('0','0 None'),('1','1 Oil(vegetable,animal,others)'),('2','2 Liquefied petroluem gas(LPG)'),('3','3 Kerosene(gaas)'),('4','4 Electricity'),('5','5 Others')])
     Q48=models.IntegerField(blank=True,null=True,choices=[
-         ('0','None'),('1','Wood'),('2','Charcoal'),('3','Liquefied petroluem gas(LPG)'),('4','Kerosene(gaas)'),('5','Electricity'),('6','Others')])
+         ('0','0 None'),('1','1 Wood'),('2','2 Charcoal'),('3','3 Liquefied petroluem gas(LPG)'),('4','4 Kerosene(gaas)'),('5','5 Electricity'),('6','6 Others')])
     Q49=models.IntegerField(blank=True,null=True,choices=[
-         ('1','Lake,river,rain,others'),('2','Dug well'),('3','Unprotected spring'),('4','Protected Spring'),('5','Peddler'),('6','Tubed/Piped shallow well'),
-         ('7','Shared, faucet community water systemd'),('8','Own use/tubed/piped deep well'),('9','Shared, faucet community water system'),('10','Own use. faucet community water system'),('11','Bottled water'),('12','Others')])
+         ('1','1 Lake,river,rain,others'),('2','2 Dug well'),('3','3 Unprotected spring'),('4','4 Protected Spring'),('5','5 Peddler'),('6','6 Tubed/Piped shallow well'),
+         ('7','7 Shared, faucet community water systemd'),('8','8 Own use/tubed/piped deep well'),('9','9 Shared, faucet community water system'),('10','10 Own use. faucet community water system'),('11','11 Bottled water'),('12','12 Others')])
     Q50A=models.IntegerField(blank=True,null=True,choices=[
-         ('1','Feeding to animals'),('2','Burying'),('3','Composting'),('4','Burning'),('5','Dumping individual pit(not burned)'),('6','Picked-up by garbage truck')])
-    Q50B=models.IntegerField(blank=True,null=True, choices=[('yes','YES'),('no','NO')])
-    Q51=models.IntegerField(blank=True,null=True)
-    Q52=models.IntegerField(blank=True,null=True)
-    Q53=models.IntegerField(blank=True,null=True)
+         ('1','1 Feeding to animals'),('2','2 Burying'),('3','3 Composting'),('4','4 Burning'),('5','5 Dumping individual pit(not burned)'),('6','6 Picked-up by garbage truck')])
+    Q50B=models.IntegerField(blank=True,null=True, choices=[('yes','1 YES'),('no','2 NO')])
+    Q51=models.IntegerField(blank=True,null=True,choices=[('yes','1 YES'),('no','2 NO')])
+    Q52=models.IntegerField(blank=True,null=True,choices=[
+         ('1','1 Single House'),('2','2 Duplex'),('3','3 Multi-unit residential (tree units or more)'),('4','4 Commercial/industrial/agricultural'),('5','5 Insitutional Living Quarter (hotel, hjospital)'),('6','6 Other housing units (boat,cave,others)')])
+    Q53=models.IntegerField(blank=True,null=True,
+                            choices=[('0','0 No Walls'),
+         ('1','1 Makeshift/salvaged/improvised materials'),('2','2 Glass'),('3','3 Asbestos'),('4','4 Bamboo/Sawali/Cogon/Nipa'),('5','5 Galvanized Iron/Aluminum'),('6','6 Half Concreate/brick/stone and half wood'),
+         ('7','7 Wood'),('8','8 Concrete/brick/stone'),('9','9 Others')])
     Q54AGE=models.IntegerField(blank=True,null=True)
     Q54COD=models.CharField(max_length=100,blank=True,null=True)
 
