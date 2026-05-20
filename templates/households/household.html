@@ -1,0 +1,35 @@
+{%extends 'base.html' %}
+{% load crispy_forms_tags %}
+{%load static%}
+{%load bootstrap5%}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load humanize %}
+{%block main%}
+{% load humanize %}
+     <div>
+            <div class="col d-block flex-nowrap justify-content-end d-sm-flex " style="padding: 10px;">
+                {%if messages%}
+                <ul class="messages" >
+                    {%for m in messages%}
+                        <li  class="alert alert-{{message.level_tag|lower}}" role="alert" style="color: red;margin: 0;padding: 0;">{{m}}{{message.tags}}</li>
+                    {%endfor%}
+                </ul>
+                {%endif%}
+            </div>
+    {%block households%}
+    
+    {%endblock%}
+    
+
+
+
+    </div>
+
+<style>
+    .nav-item:hover,.nav-link:hover{background-color: teal;color: whitesmoke;color:whitesmoke;}
+    h4{padding-left: 5px;}
+    .sidebar .nav-item{margin-top: 10px;}
+</style>
+
+{%endblock%}

@@ -1,0 +1,427 @@
+    {%extends 'households/household.html'%}
+    {%block households%}
+    {% load crispy_forms_tags %}
+    <div class="table-responsive"  style="width: 95%;margin: auto;">
+   
+    <form method="post">
+    <ul class="nav nav-tabs" id="mytab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab">A. DEMOGRAPHIC CHARACTERISTICS</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab2-tab"data-bs-toggle="tab"  data-bs-target="#tab2" type="button" role="tab">B. ECONOMIC ACTIVITY</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab">C. HEALTH INFORMATION</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab">D. SOCIO-CIVIC PARTICIPATION</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab">E. MIGRATION INFORMATION</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab6" type="button" role="tab">F. CTC & SKILLS DEVELOPEMENT </button>
+        </li>
+    </ul>
+ <div class= "tab-content border border-top-0 p-3" style="overflow-x: scroll; min-height: 650px;">
+    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+       <form method="post">
+   {%csrf_token%}
+   {{ formset.management_form }}
+
+        <table class="table table-bordered">
+            <thead style="text-align: center;">
+                <tr >
+                    <th colspan="12">FOR ALL HOUSEHOLD MEMBERS</th>
+                    <th>FOR 5 YRS & ABOVE</th>
+                    <th colspan="3">FOR 3-24 YRS OLD</th>
+                </tr>
+                <tr style="font-weight: bolder;">
+                    <td style="min-width:200px;">LASTNAME</td>
+                    <td style="min-width:200px;">FIRSTNAME</td>
+                    <td style="min-width:200px;">MIDDLENAME</td>
+                    <td>EXT NAME</td>
+                    <td><b>Q2</b><br>RELATIONSHIP TO HH</td>
+                    <td style="min-width:100px;"><b>Q3</b><br>SEX</td>
+                    <td><b>Q5</b><br>DATE OF BIRTH</td>
+                    <td style="min-width:200px;"><b>Q6</b><br>PLACE OF BIRTH</td>
+                    <td><b>Q7</b><br>NATIONALITY</td>
+                    <td><b>Q8</b><br>MARITAL STATUS</td>
+                    <td><b>Q9</b><br>RELIGION</td>
+                    <td><b>Q10</b><br>ETHNICITY</td>
+                    <td><b>Q11</b><br>HIGHEST LEVEL OF EDUCATION COMPLETED</td>
+                    <td><b>Q12</b><br>CURRENTLY ENROLLED</td>
+                    <td><b>Q13</b><br>SCHOOL LEVEL</td>
+                    <td><b>Q14</b><br>PLACE OF SCHOOL</td>
+                </tr>
+                <tr>
+                   <td colspan="4">Who are the members of this household starting from the HH Head?</td>
+                   <td>What is ___'s relationship to HH head?</td>
+                   <td>Is __ male or female?</td>
+                   <td>When was __ born?</td>
+                   <td>Where was born?</td>
+                   <td>Is __ a Filipino? If not, what is __'s nationality?</td>
+                   <td>What __'s current marital status</td>
+                   <td>What is the religion of __?</td>
+                   <td>What __'s ethnicity?</td>
+                   <td>What is the highest level of education completed by?</td>
+                   <td>Is __ currently enrolled?</td>
+                   <td>What type of school is __ on?</td>
+                   <td>In what barangay and city/municipality is __ currently attending school?</td>
+                 <th style="color:darkred;"><i class="fas fa-trash"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for form in formset.forms%}
+                    <tr>
+                        <td>
+                        {{form.id}}
+                        {%for h in form.hidden_fields%}
+                        {{h}}
+                        {%endfor%}
+                        {{form.lastname}}
+                        {{form.lastname.errors}}
+                        </td>
+                        <td>{{form.firstname}}{{form.lastname.errors}}</td>
+                        <td>{{form.middlename}}{{form.middlename.errors}}</td>
+                        <td>{{form.extname}}{{form.extname.errors}}</td>
+                        <td>{{form.relationtohead}}{{form.relationtohead.errors}}</td>
+                        <td>{{form.sex}}{{form.sex.errors}}</td>
+                        <td>{{form.birthday}}{{form.birthday.errors}}</td>
+                        <td>{{form.bpcity}}{{form.bcity.errors}}
+                            {{form.bpprovince}}{{form.bpprovince.errors}}
+                        </td>
+                        <td>{{form.nationality}}{{form.nationality.errors}}</td>
+                        <td>{{form.maritalstatus}}{{form.maritalstatus.errors}}</td>
+                        <td>{{form.religion}}{{form.religion.errors}}</td>
+                        <td>{{form.etnicity}}{{form.etnicity.errors}}</td>
+                        <td>{{form.highesteducation}}{{form.highesteducation.errors}}</td>
+                        <td>{{form.currentlyenrolled}}{{form.currentlyenrolled.errors}}</td>
+                        <td>{{form.schoollevel}}{{form.schoollevel.errors}}</td>
+                        <td>{{form.placeofschool}}{{form.placeofschool.errors}}</td>
+
+                        <td>
+                        {% if formset.can_delete %}
+                            {{ form.DELETE }}
+                        {% endif %}
+                        </td>
+                    </tr>
+                    {%endfor%}
+            </tbody>
+        </table>
+
+
+    </div>
+
+    <div class="tab-pane fade show" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+            <table class="table table-bordered">
+            <thead style="text-align: center;">
+                <tr >
+                    <th colspan="4">FOR 15 YEARS AND ABOVE</th>
+                </tr>
+                <tr>
+                    <td style="min-width:200px;"><b>Q15</b><br>MONTHLY INCOME</td>
+                    <td style="min-width:200px;"><b>Q16</b><br>SOURCE OF INCOME</td>
+                    <td style="min-width:200px;"><b>Q17</b><br>STATUS OF WORK / BUSINESS</td>
+                    <td><b>Q18</b><br>PLACE OF WORK / BUSINESS</td>
+                </tr>
+                <tr>
+                   <td>How much is __'s monthly income?</td>
+                   <td>What is the major source of __'s income?</td>
+                   <td>What is the status of __'s work/business</td>
+                   <td>In what barangay and city/municipality is __'s work/business?</td>
+
+                <th style="color: darkred;"><i class="fas fa-trash"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for form in formset.forms%}
+                    <tr>
+                        <td>
+                        {{form.id}}
+                        {%for h in form.hidden_fields%}
+                        {{h}}
+                        {%endfor%}
+                        {{form.monthlyincome}}
+                        {{form.monthlyincome.errors}}
+                        </td>
+                        <td>{{form.sourceofincome}}{{form.sourceofincome.errors}}</td>
+                        <td>{{form.statusofwork}}{{form.statusofwork.errors}}</td>
+                        <td>{{form.placeofwork}}{{form.placeofwork.errors}}</td>
+                 
+                        <td>
+                        {% if formset.can_delete %}
+                            {{ form.DELETE }}
+                        {% endif %}
+                        </td>
+                    </tr>
+                    {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade show" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+       <table class="table table-bordered">
+            <thead style="text-align: center;">
+                <tr >
+                    <th colspan="3">FOR 0 TO 11 MONTHS OLD</th>
+                    <th colspan="4">FOR WOMEN 10 TO 54 YEARS</th>
+                    <th colspan="4">FOR ALL HOUSEHOLD</th>
+                </tr>
+                <tr>
+                    <td style="min-width:200px;"><b>Q19</b><br>PLACE OF DELEVERY</td>
+                    <td style="min-width:200px;"><b>Q20</b><br>BIRTH ATTENDANT</td>
+                    <td style="min-width:200px;"><b>Q21</b><br>IMMUNIZATION</td>
+                    <td><b>Q22</b><br>LIVING CHILDREN</td>
+                    <td><b>Q23</b><br>FAMILY PLANNING (FP) USE</td>
+                    <td><b>Q24</b><br>SOURCE OF FP METHOD</td>
+                    <td><b>Q25</b><br>INTENTION TO USE FP</td>
+                    <td><b>Q26</b><br>HEALTH INSURANCE</td>
+                    <td><b>Q27</b><br>FACILITY VISITED IN PAST 12 MONTHS</td>
+                    <td><b>Q28</b><br>REASON FOR VISIT IN HEALTH FACILITY</td>
+                    <td><b>Q29</b><br>DISABILITY</td>
+                </tr>
+                <tr>
+                   <td>Where was __ delivered?</td>
+                   <td>Who attended in the delevery of __?</td>
+                   <td>What is the last vaccine received by __?</td>
+                   <td>How many pregnancies does __had? <br>How many chil/dren are still living?</td>
+                   <td>What family planning method does __ and partner currently use?</td>
+                   <td>If using FP where did they obtain the FP method?</td>
+                   <td>Does __ and partner intend to se FP method? If yes what method? if no, why not?</td>
+                   <TD>What is the primary health insurance __ have?</TD>
+                   <TD>What facility did __ visited in the past 12 months?</TD>
+                   <TD>What is the reason for the visit in health facility?</TD>
+                   <TD>Is there a member of the HH that has any disability? What is the disability?</TD>
+
+                <th style="color:darkred"><i class="fas fa-trash"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for form in formset.forms%}
+                    <tr>
+                        <td>
+                        {{form.id}}
+                        {%for h in form.hidden_fields%}
+                        {{h}}
+                        {%endfor%}
+                        {{form.q19}}
+                        {{form.q19.errors}}
+                        </td>
+                        <td>{{form.q20}}{{form.q20.errors}}</td>
+                        <td>{{form.q21}}{{form.q21.errors}}</td>
+                        <td>{{form.q22a}}{{form.q22a.errors}}{{form.q22b}}{{form.q22b.errors}}</td>
+                        <td>{{form.q23}}{{form.q23.errors}}</td>
+                        <td>{{form.q24}}{{form.q24.errors}}</td>
+                        <td>{{form.q25a}}{{form.q25a.errors}}{{form.q25b}}{{form.q25b.errors}}</td>
+                        <td>{{form.q26}}{{form.q26.errors}}</td>
+                        <td>{{form.q27}}{{form.q27.errors}}</td>
+                        <td>{{form.q28}}{{form.q28.errors}}</td>
+                        <td>{{form.q29}}{{form.q29.errors}}</td>
+                 
+                        <td>
+                        {% if formset.can_delete %}
+                            {{ form.DELETE }}
+                        {% endif %}
+                        </td>
+                    </tr>
+                    {%endfor%}
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="tab-pane fade show" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+        <table class="table table-bordered">
+            <thead style="text-align: center;">
+                <!-- <tr >
+                    <th colspan="3">FOR 0 TO 11 MONTHS OLD</th>
+                    <th colspan="4">FOR WOMEN 10 TO 54 YEARS</th>
+                    <th colspan="4">FOR ALL HOUSEHOLD</th>
+                </tr> -->
+                <tr>
+                    <td><b>Q30</b><br>SOLO PARENT</td>
+                    <td><b>Q31</b><br>REGISTERED SENIOR CITIZEN</td>
+                    <td><b>Q32</b><br>REGISTERED VOTER</td>
+                </tr>
+                <tr>
+                   <td>Is there a member of the HH that is solo parent? Is he/she registered?</td>
+                   <td>Is __ a registered senior citizen?</td>
+                   <td>In what barangay is __ a registered voter?</td>
+                <th><i class="fas fa-trash"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for form in formset.forms%}
+                    <tr>
+                        <td>
+                        {{form.id}}
+                        {%for h in form.hidden_fields%}
+                        {{h}}
+                        {%endfor%}
+                        {{form.q30}}
+                        {{form.q30.errors}}
+                        </td>
+                        <td>{{form.Q31}}{{form.Q31.errors}}</td>
+                        <td>{{form.Q32}}{{form.Q32.errors}}</td>
+                 
+                        <td>
+                        {% if formset.can_delete %}
+                            {{ form.DELETE }}
+                        {% endif %}
+                        </td>
+                    </tr>
+                    {%endfor%}
+            </tbody>
+        </table>
+       
+    </div>
+
+    <div class="tab-pane fade show" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
+
+    <table class="table table-bordered">
+            <thead style="text-align: center;">
+                <tr >
+                    <th colspan="9">FOR MIGRANTS AND TRANSIENTS</th>
+
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Q33,Q34</b><br>PREVIOUS RESIDENCE</td>
+                    <td ><b>Q35</b><br>LENGTH OF STAY IN THE BARANGAY</td>
+                    <td><b>Q36</b><br>TYPE OF RESIDENT</td>
+                    <td><b>Q37</b><br>DATE OF TRANSFER</td>
+                    <td colspan="3"><b>Q38A,Q38B,Q38C</b><br>REASON/S FOR LEAVING THE PREVIOUS RESIDENTS</td>
+                    <td colspan="2"><b>Q39</b><br>RETURN TO PREVIOUS RESIDENCE</td>
+                    <td colspan="3"><b>Q40A,Q40B,Q40C</b><br>REASON FOR TRANSFERING IN THIS BARANGAY</td>
+                    <td><b>Q41</b><br>DURATION OF STAY IN CURRENT BARANGAY</td>
+                </tr>
+                <tr>
+                   <td>In  what barangay and city/municipality did __ reside five years ago?</td>
+                   <td>In what barangay and city/municipality did __ reside six months ago?</td>
+                   <TD>How long is been staying in this barangay? No of years/No of Months</TD>
+                   <td>Indicate if Non-migrant Migrant or Transient</td>
+                   <TD>When did transfer in barangay? mm/yyyy</TD>
+                   <TD colspan="3">What are the reason/s why ;eft his/her previous residence</TD>
+                   <td colspan="2">Does __ plan to return to previous residence? When?</td>
+                   <td colspan="3">What are the reason/s why __ transfered in this barangay?</td>
+                   <td>Until when does ___intend to stay in this barangay?</td>
+                <th style="color: darkred;"><i class="fas fa-trash"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for form in formset.forms%}
+                    <tr>
+                        <td>
+                        {{form.id}}
+                        {%for h in form.hidden_fields%}
+                        {{h}}
+                        {%endfor%}
+                        {{form.q33a}}
+                        {{form.q33a.errors}}
+                        {{form.q33b}}
+                        {{form.q33b.errors}}
+                        </td>
+                        <td>
+                            {{form.q34a}}
+                            {{form.q34a.errors}}
+                            {{form.q34b}}
+                            {{form.q34b.errors}}
+                         </td>
+                        <td>
+                            {{form.q35a}}
+                            {{form.q35a.errors}}
+                            {{form.q35b}}
+                            {{form.q35b.errors}}
+                         </td>
+                         <td>{{form.q36}}{{form.q36.errors}}</td>
+                         <td>{{form.q37}}{{form.q37.errors}}</td>
+                         <td>{{form.q38a}}{{form.q38a.errors}}</td>
+                         <td>{{form.q38b}}{{form.q38b.errors}}</td>
+                         <td>{{form.q38c}}{{form.q38c.errors}}</td>
+                         <td>{{form.q39a}}{{form.q39a.errors}}</td>
+                         <td>{{form.q39b}}{{form.q39b.errors}}</td>
+                        <td>{{form.q40a}}{{form.q40a.errors}}</td>
+                         <td>{{form.q40b}}{{form.q40b.errors}}</td>
+                         <td>{{form.q40c}}{{form.q40c.errors}}</td>
+                         <td>{{form.q41}}{{form.q41.errors}}</td>
+                 
+                        <td>
+                        {% if formset.can_delete %}
+                            {{ form.DELETE }}
+                        {% endif %}
+                        </td>
+                    </tr>
+                    {%endfor%}
+            </tbody>
+        </table>
+       
+    </div>
+
+    <div class="tab-pane fade show" id="tab6" role="tabpanel" aria-labelledby="tab6-tab">
+        <table class="table table-bordered table-hover">
+            <thead style="text-align: center;">
+            <tr>
+                <td colspan="2"><b>F. COMMUNITY TAX CERTIFICATE</b></td>
+                <td colspan="2"><b>G. SKILL DEVELOPEMENT</b></td>
+                <td rowspan="3"></td>
+            </tr>
+            <tr>
+                <td colspan="2">FOR 18 & ABOVE</td>
+                <td colspan="2">FOR 15 & ABOVE</td>
+            </tr>
+            <tr>
+                <td colspan="2"><b>Q42A,Q42B</b><br>CTC INFORMATION</td>
+                <td><b>Q43</b><br>SKILLS DEVELOPMENT TRAINING</td>
+                <td><b>Q44</b><br>SKILLS</td>
+            </tr>
+            <tr>
+                <td>Does __ have  valid CTC?</td>
+                <td>Was the CTC issued in this barangay?</td>
+                <td>What type of skills developement training is interested to join in?</td>
+                <td>What type of skills do you have?</td>
+                <td style="color: darkred;"><i class="fas fa-trash"></i></td>
+            </tr>
+              </thead>
+                    <tr>
+ {%for form in formset.forms%}
+                    <tr>
+                        <td>
+                        {{form.id}}
+                        {%for h in form.hidden_fields%}
+                        {{h}}
+                        {%endfor%}
+                        {{form.q42a}}
+                        {{form.q42a.errors}}
+                        </td>
+                         <td>{{form.q42b}}{{form.q42b.errors}}</td>
+                         <td>{{form.q43}}{{form.q43.errors}}</td>
+                        <td>{{form.q44}}{{form.q44.errors}}</td>                
+                        <td>
+                        {% if formset.can_delete %}
+                            {{ form.DELETE }}
+                        {% endif %}
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tr>
+          
+            <tbody>
+
+            </tbody>
+        </table>
+       
+    </div>
+ </div>
+ <br>
+         <div class="row">
+            <div class="col">
+                <button class="btn btn-outline-primary" type="submit"><i class="fas fa-save fa-lg"></i> Submit</button>
+                <button class="btn btn-outline-success" type="reset"><i class="fas fa-refresh fa-lg"></i> Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+<style>
+        .form-select,.form-control{min-width:200px;}
+</style>
+    {%endblock%}

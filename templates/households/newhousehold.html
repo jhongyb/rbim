@@ -1,0 +1,210 @@
+    {%extends 'households/household.html'%}
+    {%block households%}
+    {% load crispy_forms_tags %}
+    <div style="width: 80%;margin: auto;">
+   
+    <form method="post">
+
+
+    <ul class="nav nav-tabs" id="mytab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab">A. IDENTIFICATION</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab2-tab"data-bs-toggle="tab"  data-bs-target="#tab2" type="button" role="tab">B. INTERVIEW INFORMATION</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab">C. ENCODING INFORMATION</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab">D. QUESTIONS FOR THE HOUSEHOLDS</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab">E. OTHER INFORMATION</button>
+        </li>
+    </ul>
+ <div class= "tab-content border border-top-0 p-3">
+    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                 <h4>A. IDENTIFICATION</h4>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-2">
+                {{form.household_no|as_crispy_field}}
+            </div>
+            <div class="col-2">
+                {{form.household|as_crispy_field}}
+            </div>
+            <div class="col-2">
+                {{form.ilq|as_crispy_field}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">{{form.province|as_crispy_field}}</div>
+            <div class="col">{{form.municipality|as_crispy_field}}</div>
+            <div class="col">{{form.barangay|as_crispy_field}}</div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{form.purok|as_crispy_field}}
+            </div>
+            <div class="col">
+                {{form.address|as_crispy_field}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">{{form.respondent|as_crispy_field}}</div>
+            <div class="col">{{form.head|as_crispy_field}}</div>
+            <div class="col">{{form.noofmembers|as_crispy_field}}</div>
+        </div>
+
+    </div>
+
+    <div class="tab-pane fade show" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+        <h4>B. INTERVIEW INFORMATION</h4>
+        <table class="table table-bordered">
+            <thead style="text-align: center;">
+                <tr>
+                    <th>Visit</th>
+                    <th>Date of Visit</th>
+                    <th>Time Start</th>
+                    <th>Time End</th>
+                    <th>Result <br>C=Completed <br>CB=Callback <br>R=Refused</th>
+                    <th>Date of Next Visit</th>
+                    <th>Name of Interviewer, Initial/Date</th>
+                    <th>Name of Supervisor Initial/Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1st Visit</td>
+                    <td>{{form.dateofvisit1|as_crispy_field}}</td>
+                    <td>{{form.timestart1|as_crispy_field}}</td>
+                    <td>{{form.timeend1|as_crispy_field}}</td>
+                    <td>{{form.result1|as_crispy_field}}</td>
+                    <td>{{form.datenextvisit1|as_crispy_field}}</td>
+                    <td>{{form.interviewer1|as_crispy_field}}</td>
+                    <td>{{form.supervisor1|as_crispy_field}}</td>
+                </tr>
+                <tr>
+                    <td>2nd Visit</td>
+                    <td>{{form.dateofvisit2|as_crispy_field}}</td>
+                    <td>{{form.timestart2|as_crispy_field}}</td>
+                    <td>{{form.timeend2|as_crispy_field}}</td>
+                    <td>{{form.result2|as_crispy_field}}</td>
+                    <td>{{form.datenextvisit2|as_crispy_field}}</td>
+                    <td>{{form.interviewer2|as_crispy_field}}</td>
+                    <td>{{form.supervisor2|as_crispy_field}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade show" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+        <h4>C. ENCODING INFORMATION</h4>
+        <table class="table table-bordered">
+            <thead style="text-align: center;">
+                <tr>
+                    <th>Date Encoded</th>
+                    <th>Name and Initial of Encoder</th>
+                    <th>Name of Supervisor Initial and Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{form.dateencoded|as_crispy_field}}</td>
+                    <td>{{form.encoder|as_crispy_field}}</td>
+                    <td>{{form.encodersupervisor|as_crispy_field}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade show" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+        <h4>QUESTIONS FOR THE HOUSEHOLDS</h4>
+        <div class="row">
+            <div class="col"><b>Q45</b> Do you own or amortize this housing unit occupied by your household or do you rent it, do you occupy it rent-free
+                with consent of owner or rent-free without consent of owner? </div>
+            <div class="col">{{form.Q45|as_crispy_field}}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col"><b>Q46</b> Do you own or amortize this lot occupied by your household or do you rent it, do you occupy it rent-free
+                with consent of owner or rent-free without consent of owner? </div>
+            <div class="col">{{form.Q46|as_crispy_field}}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col"><b>Q47</b> What type of fuel does this household use for lightning? </div>
+            <div class="col">{{form.Q47|as_crispy_field}}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col"><b>Q48</b> What kind of fuel does this household use most of the time for cooking? </div>
+            <div class="col">{{form.Q48|as_crispy_field}}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col"><b>Q49</b> What is the household's main source of drinking water? </div>
+            <div class="col">{{form.Q49|as_crispy_field}}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col"><b>Q50a</b> How does your household usually dispose of your kitchen garbage such as leftover food, peeling of fruits and vegetables,
+                fish checken entrails, and others? </div>
+            <div class="col">{{form.Q50A|as_crispy_field}}</div>
+        </div>
+
+                <br>
+        <div class="row">
+            <div class="col"><b>Q50b</b> Do you segregate your garbage? </div>
+            <div class="col">{{form.Q50B|as_crispy_field}}</div>
+        </div>
+            <br>
+        <div class="row">
+            <div class="col"><b>Q51</b> What type of toilet facility does this household use? </div>
+            <div class="col">{{form.Q51|as_crispy_field}}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col"><b>Q52</b> Type of building house? </div>
+            <div class="col">{{form.Q52|as_crispy_field}}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col"><b>Q53</b> Construction materials of the outer wall? </div>
+            <div class="col">{{form.Q53|as_crispy_field}}</div>
+        </div>
+
+        <br>
+            <div class="row">
+            <div class="col"><b>Q54</b> Do you have any female HH member who died in the past 12 months? Hos old is she and what is the cause of her death </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col">{{form.Q54AGE|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">{{form.Q54COD|as_crispy_field}}</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade show" id="tab5" role="tabpanel" aria-labelledby="tab4-tab">
+        <h4>D.QUESTIONS FOR THE HOUSEHOLDS</h4>
+        <div class="row">
+            <div class="col">{{form.latitude|as_crispy_field}}</div>
+            <div class="col">{{form.longitude|as_crispy_field}}</div>
+        </div>
+    </div>
+ </div>
+ <br>
+         <div class="row">
+            <div class="col">
+                <button class="btn btn-outline-primary" type="submit"><i class="fas fa-save fa-lg"></i> Submit</button>
+                <button class="btn btn-outline-success" type="reset"><i class="fas fa-refresh fa-lg"></i> Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+    {%endblock%}

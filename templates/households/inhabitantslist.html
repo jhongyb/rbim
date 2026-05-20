@@ -1,0 +1,56 @@
+    {%extends 'households/household.html'%}
+    {%block households%}
+    {% load crispy_forms_tags %}
+
+    <div class="table-responsive" style="max-width: 95%;margin: auto;">
+           <div class="row mb-2">
+            <div class="col-4">
+                <form method="post" class="col d-block flex-nowrap justify-content-end d-sm-flex " style>
+                     {% csrf_token %} 
+                    <input type="search" class="form-control m-2" name="txtsearch" placeholder="Search . . ." style="background-color: transparent;">
+                    <button class="btn btn-outline-primary m-2" type="submit"><i class="fas fa-search fa-lg"></i></button>
+                </form>
+            </div>
+            </div>
+        {%if data%}
+        <table class="table table-bordered table-hover table-striped table-sm table-hover">
+            <thead style="text-align: center;">
+                <th>HH Number</th>
+                <th>Lastname</th>
+                <th>Firstname</th>
+                <th>Middlename</th>
+                <th>Extname</th>
+                <th>Sex</th>
+                <th>Birthday</th>
+                <th>Purok/Sitio</th>
+                <th>Barangay</th>
+           
+            </thead>
+            <tbody>
+                {%for i in data%}
+                <tr>
+                <td>{{i.hhno}}</td>
+                <td>{{i.lastname}}</td>
+                <td>{{i.firstname}}</td>
+                <td>{{i.middlename}}</td>
+                <td>{{i.extname}}</td>
+                <td>{{i.sx}}</td>
+                <td>{{i.birthday|date:'M-d-Y'}}</td>
+                <td>{{i.purok}}</td>
+                <td>{{i.brgy}}</td>
+                <!-- <td style="text-align: center;max-width: 100px;">
+                    <a href="" class="btn btn-outline-primary btn-sm" style="border-radius: 50%;"><i class="fas fa-pen"></i></a>
+                    <a href="" class="btn btn-outline-danger btn-sm" style="border-radius: 50%;"><i class="fas fa-trash"></i></a>
+                    
+                </td> -->
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <hr>
+        <p style="text-align: center;color: red;">No Data Found!</p>
+        {%endif%}
+    </div>
+
+    {%endblock%}
