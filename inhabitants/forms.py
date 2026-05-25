@@ -1,6 +1,8 @@
 from django import forms
 from .models import Households,Inhabitants
+from brgy.models import UserBarangay
 from django.forms import inlineformset_factory
+from django.http import request
 
 class HouseholdForm(forms.ModelForm):
     class Meta:
@@ -53,10 +55,8 @@ class HouseholdForm(forms.ModelForm):
             'q58b':forms.TextInput(attrs={'placeholder':'Barangay'}),
             'q58m':forms.TextInput(attrs={'placeholder':'Municipality'}),
             'q58p':forms.TextInput(attrs={'placeholder':'Province'}),
-            
-
-
         }
+
 class InhabitantsForm(forms.ModelForm):
      class Meta:
         model=Inhabitants
@@ -130,6 +130,15 @@ class InhabitantsForm(forms.ModelForm):
             'q50b':forms.Select(attrs={'class':'form-select'}),
             'q51':forms.Select(attrs={'class':'form-select'}),
             'q52':forms.Select(attrs={'class':'form-select'}),
+            'philsysno':forms.TextInput(attrs={'class':'form-control'}),
+            'occupation':forms.TextInput(attrs={'class':'form-control'}),
+            'contactno':forms.TextInput(attrs={'class':'form-control'}),
+            'email':forms.TextInput(attrs={'class':'form-control'}),
+            'rbisector':forms.Select(attrs={'class':'form-select'}),
+            'photo':forms.FileInput(attrs={'class':'form-control'}),
+            'leftthumb':forms.FileInput(attrs={'class':'form-control'}),
+            'rightthumb':forms.FileInput(attrs={'class':'form-control'}),
+            
 
 
 

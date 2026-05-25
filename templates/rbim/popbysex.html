@@ -1,0 +1,125 @@
+{%extends 'barangay/Indicators.html' %}
+{% load crispy_forms_tags %}
+{%load static%}
+{%load bootstrap5%}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load humanize %}
+
+{%block rbim%}
+{% load humanize %}
+<div class="container">
+    <h4 style="padding: 10px;text-align: center;">{{brgy}}</h4>
+</div>
+<title>Summary of Data - Population by Sex</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+        }
+        .chart-title {
+            text-align: center;
+            color: #002855;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        .chart-subtitle {
+            text-align: center;
+            color: #002855;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+
+<div style="position: relative; height: 60vh; width: 100%; max-width: 900px; margin: 0 auto;margin-top: 2%;">
+    <div class="chart-title">Summary of Data</div>
+    <div class="chart-subtitle">Population by Sex</div>
+    <canvas id="pyramidChart"></canvas>
+</div>
+
+<script>
+    const ageLabels = {{ age_groups|safe }};
+    const malePctData = {{ male_data|safe }};
+    const femalePctData = {{ female_data|safe }};
+    
+    // 3. Make sure the DOM is fully ready before querying the canvas context
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('pyramidChart').getContext('2d');
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ageLabels,
+                datasets: [
+                    {
+                        label: 'MALE',
+                        data: malePctData,
+                        backgroundColor: '#1c4a70',
+                        borderWidth: 0,
+                        barPercentage: 0.95,
+                        categoryPercentage: 1.0
+                    },
+                    {
+                        label: 'FEMALE',
+                        data: femalePctData,
+                        backgroundColor: '#ff3d00',
+                        borderWidth: 0,
+                        barPercentage: 0.95,
+                        categoryPercentage: 1.0
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false, // Relies entirely on parent container height
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { size: 13, weight: 'bold' } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                let value = Math.abs(context.raw);
+                                return `${label}: ${value.toFixed(2)}%`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { color: '#f0f0f0' },
+                        ticks: {
+                            callback: function(value) { return Math.abs(value) + '%'; }
+                        }
+                    },
+                    y: {
+                        reverse:true,
+                        stacked: true,
+                        position: 'left', // CHANGED FROM 'center': This fixes overlapping bars/labels
+                        grid: { display: false }, 
+                        ticks: {
+                            color: '#333333',
+                            font: { size: 11, weight: 'bold' }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+{%endblock%}

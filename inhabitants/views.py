@@ -1,16 +1,21 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from .forms import HouseholdForm,Inhabitants_InlineForm
 from django.contrib import messages
 from .models import Households,Barangay,Inhabitants
 from django.db import transaction
 from django.db.models import Q,F
+from rbi.access import barangay_access,userbrgy
+
 
 @login_required
+@barangay_access(redirect_url='/home')
 def households(request):
+    print(userbrgy(request.user))
     return render(request,'households/household.html')
 
 @login_required
+@barangay_access(redirect_url='/home')
 def newhouseholds(request):
     if request.method=='POST':
         data=request.POST
@@ -38,7 +43,7 @@ def newhouseholds(request):
             return redirect('householdlist')
     else:
         form=HouseholdForm()
-        return render(request,'households/newhousehold.html',{'form':form})
+        return render(request,'households/newhousehold.html',{'form':form,'barangay':userbrgy(request.user)})
 
 @login_required
 def household_update(request,pk):
@@ -67,29 +72,52 @@ def household_delete(request,pk):
 @login_required
 def householdlist(request):
     data=Households.objects.all()
-    if request.method=='POST':
-        cri=request.POST['txtsearch']
-        data=Households.objects.filter(Q(household_no__icontains=cri)|Q(head__icontains=cri)|Q(purok__icontains=cri))
+    if not request.user.username == 'admin':
+        b=userbrgy(request.user)
+        data=Households.objects.filter(barangay__in=b)
+        if request.method=='POST':
+            cri=request.POST['txtsearch']
+            data=Households.objects.filter(Q(household_no__icontains=cri)|Q(head__icontains=cri)|Q(purok__icontains=cri),barangay__in=b)
+    else:
+        if request.method=='POST':
+                cri=request.POST['txtsearch']
+                data=Households.objects.filter(Q(household_no__icontains=cri)|Q(head__icontains=cri)|Q(purok__icontains=cri))
     return render(request,'households/householdlist.html',{'data':data})
 
 @login_required
 def inhabitantslist(request):
-    data=Inhabitants.objects.select_related('hh').annotate(
-                                    hhno=F('hh__household_no'),sx=F('sex__description'),purok=F('hh__purok')
-                                    ,brgy=F('hh__barangay__name')).values(
-                                    'lastname','firstname','middlename','hhno','sx','purok','brgy',
-                                    'extname','birthday').order_by('hhno')
-    brgy=Barangay.objects.all()
-    if request.method=='POST':
-        cri=request.POST['txtsearch']
+    if not request.user.username == 'admin':
         data=Inhabitants.objects.select_related('hh').annotate(
-                                    hhno=F('hh__household_no'),sx=F('sex__description'),purok=F('hh__purok')
-                                    ,brgy=F('hh__barangay__name')).values(
-                                    'lastname','firstname','middlename','hhno','sx','purok','brgy',
-                                    'extname','birthday').filter(
-                                        Q(hhno__icontains=cri)|Q(lastname__icontains=cri)|Q(purok__icontains=cri)
-                                        |Q(firstname__icontains=cri)|Q(middlename__icontains=cri)
-                                    ).order_by('hhno')
+                                        hhno=F('hh__household_no'),sx=F('sex__description'),purok=F('hh__purok')
+                                        ,brgy=F('hh__barangay__name'),brgyid=F('hh__barangay__id'),pk=F('pk')).values('pk',
+                                        'lastname','firstname','middlename','hhno','sx','purok','brgy',
+                                        'extname','birthday').order_by('hhno').filter(brgyid__in=userbrgy(request.user))
+        brgy=Barangay.objects.all()
+        if request.method=='POST':
+            cri=request.POST['txtsearch']
+            data=Inhabitants.objects.select_related('hh').annotate(
+                                        hhno=F('hh__household_no'),sx=F('sex__description'),purok=F('hh__purok')
+                                        ,brgy=F('hh__barangay__name'),brgyid=F('hh__barangay__id'),pk=F('pk')).values('pk',
+                                        'lastname','firstname','middlename','hhno','sx','purok','brgy',
+                                        'extname','birthday').order_by('hhno').filter(
+                                            Q(hhno__icontains=cri)|Q(lastname__icontains=cri)|Q(purok__icontains=cri)
+                                            |Q(firstname__icontains=cri)|Q(middlename__icontains=cri),brgyid__in=userbrgy(request.user))
+    else:
+        data=Inhabitants.objects.select_related('hh').annotate(
+                                        hhno=F('hh__household_no'),sx=F('sex__description'),purok=F('hh__purok')
+                                        ,brgy=F('hh__barangay__name'),brgyid=F('hh__barangay__id'),pk=F('pk')).values('pk',
+                                        'lastname','firstname','middlename','hhno','sx','purok','brgy',
+                                        'extname','birthday').order_by('hhno')
+        brgy=Barangay.objects.all()
+        if request.method=='POST':
+            cri=request.POST['txtsearch']
+            data=Inhabitants.objects.select_related('hh').annotate(
+                                        hhno=F('hh__household_no'),sx=F('sex__description'),purok=F('hh__purok')
+                                        ,brgy=F('hh__barangay__name'),brgyid=F('hh__barangay__id'),pk=F('pk')).values('pk',
+                                        'lastname','firstname','middlename','hhno','sx','purok','brgy',
+                                        'extname','birthday').order_by('hhno').filter(
+                                            Q(hhno__icontains=cri)|Q(lastname__icontains=cri)|Q(purok__icontains=cri)
+                                            |Q(firstname__icontains=cri)|Q(middlename__icontains=cri))
     return render(request,'households/inhabitantslist.html',{'data':data,'brgy':brgy})
 
 @login_required
@@ -98,7 +126,7 @@ def inhabitant_members(request,pk):
     hh = get_object_or_404(Households, household_no=pk)
     if request.method == 'POST':
         # 2. Bind the POST data to the formset
-        formset = Inhabitants_InlineForm(request.POST, instance=hh)
+        formset = Inhabitants_InlineForm(request.POST,request.FILES, instance=hh)
         if formset.is_valid():
             try:
                 # 3. Use a transaction to ensure all members save or none do

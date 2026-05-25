@@ -55,7 +55,8 @@ class Households(models.Model):
     Q50A=models.IntegerField(blank=True,null=True,choices=[
          ('1','1 Feeding to animals'),('2','2 Burying'),('3','3 Composting'),('4','4 Burning'),('5','5 Dumping individual pit(not burned)'),('6','6 Picked-up by garbage truck')])
     Q50B=models.IntegerField(blank=True,null=True, choices=[('yes','1 YES'),('no','2 NO')])
-    Q51=models.IntegerField(blank=True,null=True,choices=[('yes','1 YES'),('no','2 NO')])
+    Q51=models.IntegerField(blank=True,null=True,choices=[ ('0','0 None'),
+         ('1','1 Open pit'),('2','2 Close pit'),('3','3 Water-sealed, other depository, shared'),('4','4 Water-sealed, other depository, exclusive'),('5','5 Water-sealed, sewer septictank, shared'),('6','6 Water-sealed, sewer septic tank, exclusive'),('7','7 Others')])
     Q52=models.IntegerField(blank=True,null=True,choices=[
          ('1','1 Single House'),('2','2 Duplex'),('3','3 Multi-unit residential (tree units or more)'),('4','4 Commercial/industrial/agricultural'),('5','5 Insitutional Living Quarter (hotel, hjospital)'),('6','6 Other housing units (boat,cave,others)')])
     Q53=models.IntegerField(blank=True,null=True,
@@ -121,7 +122,7 @@ class Inhabitants(models.Model):
         q22b=models.IntegerField(default=0,blank=True,null=True)
         q23=models.ForeignKey(FPMethod,on_delete=models.SET_NULL,blank=True,null=True)
         q24=models.ForeignKey(SourceFP,on_delete=models.SET_NULL,blank=True,null=True)
-        q25a=models.CharField(max_length=3,choices=[('yes','YES'),('no','NO')],default='no',blank=True,null=True)
+        q25a=models.CharField(max_length=3,choices=[('yes','1 YES'),('no','1 NO')],default='no',blank=True,null=True)
         q25b=models.CharField(max_length=100,blank=True,null=True)
         q26=models.ForeignKey(HealthInsurance,on_delete=models.SET_NULL,blank=True,null=True)
         q27=models.ForeignKey(FacilityVisited,on_delete=models.SET_NULL,blank=True,null=True)
@@ -159,5 +160,17 @@ class Inhabitants(models.Model):
 #SKILLS
         q43=models.CharField(max_length=250,blank=True,null=True)
         q44=models.ForeignKey(Skills,on_delete=models.SET_NULL,blank=True,null=True)
+
+#OTHER INFO
+        philsysno=models.CharField(max_length=100,null=True,blank=True)
+        occupation=models.CharField(max_length=100,null=True,blank=True)
+        contactno=models.CharField(max_length=15,null=True,blank=True)
+        email=models.EmailField(blank=True,null=True)
+        rbisector=models.CharField(max_length=200,choices=[('LABOR/EMPLOYED','LABOR/EMPLOYED'),('UNEMPLOYED','UNEMPLOYED'),('PWD','PWD'),('OFW','OFW'),
+                                                           ('SOLOPARENT','SOLOPARENT'),('OSY','OSY'),('OSC','OSC'),('IP','IP')],blank=True)
+        photo=models.ImageField(upload_to='rbi/',blank=True)
+        leftthumb=models.ImageField(upload_to='thumb/',blank=True)
+        rightthumb=models.ImageField(upload_to='thumb/',blank=True)
+
         class Meta:
               unique_together = ('hh', 'lastname', 'firstname', 'birthday')

@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from . import rbireport
 
 
 urlpatterns=[
@@ -13,4 +14,7 @@ urlpatterns=[
     path('inhabitantslist',views.inhabitantslist,name='inhabitantslist'),
     path('inhabitants@<pk>',views.inhabitant_members,name='inhabitants'),
     path('household/members/<int:pk>/', views.inhabitant_members, name='inhabitant_members'),
+
+    path('rbi/formb/<pk>/',rbireport.rbiformb,name='rbiformb'),
+    path('rbi/forma/<pk>/',rbireport.rbiforma,name='rbiforma'),
 ]

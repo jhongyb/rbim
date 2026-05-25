@@ -21,7 +21,7 @@
 
             <a class="navbar-brand" href="#" style="font-family: 'Arial';font-size:xx-large;">
                 <img src="{% static 'img/LOGO.png' %}"  style="width:45px;" class="rounded-pill"> 
-                BAGUMBAYAN RECORDS OF MUNICIPAL INHABITANTS
+                LGU-BAGUMBAYAN RECORDS OF MUNICIPAL INHABITANTS
             </a>
             {%if user.is_authenticated %}
             <a class="nav-link" href="{%url 'logoutuser' %}" style="color: white;border-radius: 20px;"> <i class="fas fa-user fa-lg"> </i> Welcome {{user}}   <i class="fas fa-sign-out fa-lg" style="margin-left: 5px;"> </i> Logout</a>
@@ -35,12 +35,12 @@
 <!-- HOUSEHOLD -->
       <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-               <i class="fas fa-home fa-lg"></i>  Households
+               <i class="fas fa-home fa-lg"></i>  HOUSEHOLD
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width: 300px;">
-                <li class="nav-item"><a href="{%url 'newhousehold' %}"  class="nav-link"><i class="fas fa-building fa-lg"></i> New Household</a></li>
-                <li class="nav-item"><a href="{%url 'householdlist' %}"  class="nav-link"><i class="fas fa-heartbeat fa-lg"></i> List of Household</a></li>
-                <li class="nav-item"><a href="{%url 'inhabitantslist' %}"  class="nav-link"><i class="fas fa-universal-access fa-lg"></i> List of Inhabitants</a></li>
+                <li class="nav-item"><a href="{%url 'newhousehold' %}"  class="nav-link"> New Household</a></li>
+                <li class="nav-item"><a href="{%url 'householdlist' %}"  class="nav-link"> List of Household</a></li>
+                <li class="nav-item"><a href="{%url 'inhabitantslist' %}"  class="nav-link"> List of Inhabitants</a></li>
               <!-- <hr>
               <li class="nav-item"><a href="{%url 'newhousehold' %}"  class="nav-link"><i class="fas fa-building fa-lg"></i> Figures</a></li>
                 <li class="nav-item"><a href=""  class="nav-link"><i class="fas fa-heartbeat fa-lg"></i> Graphs</a></li>
@@ -54,14 +54,14 @@
 
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             <i class="fas fa-users fa-lg "></i>    Records of Municipal Inhabitants
+             <i class="fas fa-users fa-lg "></i>   MUNICIPAL INHABITANTS
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width: 300px;">
-                <li class="nav-item"><a href="{%url 'rbibarangay' %}"  class="nav-link"><i class="fas fa-building fa-lg"></i> Barangay</a></li>
-                <li class="nav-item"><a href=""  class="nav-link"><i class="fas fa-heartbeat fa-lg"></i> </a></li>
-                <li class="nav-item"><a href=""  class="nav-link"><i class="fas fa-universal-access fa-lg"></i> </a></li>
-                <li class="nav-item"><a href=""  class="nav-link"><i class="fas fa-universal-access fa-lg"></i> </a></li>
-                <li class="nav-item"><a href=""  class="nav-link"><i class="fas fa-signal fa-lg"></i> </a></li>
+                <li class="nav-item"><a href="{%url 'rbibarangay' %}"  class="nav-link"> Barangays</a></li>
+                <li class="nav-item"><a href=""  class="nav-link"> Barangay Inhabitants </a> </li>
+                <li class="nav-item"><a href="{% url 'rbimindicators'%}"  class="nav-link"> RBIM Indicators Summary</a></li>
+                <li class="nav-item"><a href=""  class="nav-link"> </a></li>
+                <li class="nav-item"><a href=""  class="nav-link"> </a></li>
               
             </ul>
         </li> 
@@ -69,7 +69,7 @@
 
               <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Settings
+                SETTINGS
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width: 300px;">
                 <li class="nav-item"><a href=""  class="nav-link"><i class="fas fa-building fa-lg"></i> </a></li>

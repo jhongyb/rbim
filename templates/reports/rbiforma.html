@@ -1,0 +1,113 @@
+<style>
+    *{
+        font-family: arial;
+        font-size:12;
+    }
+    .tbldata, .tbldata tr,.tbldata th, .tbldata td{
+        border: 1px solid;
+        border-collapse: collapse;
+        padding: 2px;
+    }
+    .tbldata{
+        width: 100%;
+    }
+</style>
+<title>RBI FORM A (Revised 2024)</title>
+<div style="width: 100%;">
+    <h1>RBI FORM A (Revised 2024)</h1>
+    <h1 style="text-align: center;width: 100%;box-sizing: border-box;">RECORDS OF BARANGAY INHABITANTS BY HOUSEHOLD</h1>
+
+<table>
+    <tr>
+        <td>REGION</td>
+        <td style="border-bottom: 1px solid ;min-width: 200px;">XII</td>
+    </tr>
+    <tr>
+        <td>PROVINCE</td>
+        <td style="border-bottom: 1px solid ;min-width: 200px;"> SULTAN KUDARAT</td>
+    </tr>
+    <tr>
+        <td>CITY/MUNICIPALITY</td>
+        <td style="border-bottom: 1px solid ;min-width: 200px;">BAGUMBAYAN</td>
+    </tr>
+    <tr>
+        <td>BARANGAY</td>
+        <td style="border-bottom: 1px solid ;min-width: 200px;">{{house.barangay}}</td>
+    </tr>
+    <tr>
+        <td>HOUSEHOLD ADDRESS</td>
+        <td style="border-bottom: 1px solid ;min-width: 200px;">{{house.purok}}, {{house.barangay}}, {{house.municipality}}, {{house.province}}</td>
+    
+    </tr>
+    <tr>
+        <td>NO. OF HOUSEHOLD MEMBERS</td>
+        <td style="border-bottom: 1px solid ;min-width: 200px;text-align: center;">{{data|length}}</td>
+    </tr>
+</table>
+<table class="tbldata">
+    <thead>
+    <tr style="background-color: lightgreen;">
+        <th colspan="4">NAME</th>
+        <th rowspan="2">PLACE OF BIRTH</th>
+        <th rowspan="2">DATE OF BIRTH</th>
+        <th rowspan="2">AGE</th>
+        <th rowspan="2">SEX</th>
+        <th rowspan="2">CIVIL STATUS</th>
+        <th rowspan="2">CITIZENSHIP</th>
+        <th rowspan="2">OCCUPATION</th>
+        <th rowspan="2">Indicate if Labor/employed, <br>Unemployed,PWD,OFW,Solo Parent <br> Out of School Youth (OSY) <br> Out of School Children (OSC) <br> and/or IP</th>
+    </tr>
+    <tr style="background-color: lightgreen;">
+        <th>LAST NAME</th>
+        <th>FIRST NAME</th>
+        <th>MIDDLE NAME</th>
+        <th>EXT</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for i in data %}
+        <tr>
+            <td>{{i.lastname}}</td>
+            <td>{{i.firstname}}</td>
+            <td>{{i.middlename}}</td>
+            <td>{{i.extname}}</td>
+            <td>{{i.bpcity}}, {{i.bpprovince}}</td>
+            <td style="text-align: center;">{{i.birthday|date:'M-d-Y'}}</td>
+            <td style="text-align: center;">{{i.age}}</td>
+            <td style="text-align: center;">{{i.gender}}</td>
+            <td>{{i.civil_status}}</td>
+            <td>{{i.citizenship}}</td>
+            <td>{{i.occupation}}</td>
+            <td>{{i.rbisector}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+<br>
+<table style="width:100%;">
+    <tr>
+        <td>Prepared by </td>
+        <td>Certified Correct</td>
+        <td>Validated by </td>
+    </tr>
+    <tr></tr>
+    <tr style="font-weight: bolder;">
+        <td style="padding-top: 20px;text-decoration: overline"><br><br><br>Name of Household/Head Member</td>
+        <td style="padding-top: 20px;"> <br><br><u></u><br>Barangay Secretary</td>
+        <td style="padding-top: 20px;"><br><br><u></u><br>Punong Barangay </td>
+    </tr>
+    <tr>
+        <td>(Signature over Printed Name)</td>
+        <td>(Signature over Printed Name)</td> 
+        <td>(Signature over Printed Name)</td>
+    </tr>
+</table>
+<p style="text-align: justify;text-justify: inter-word;">I hreby certify that the above information are true and correct to the best of my knowledge.  I
+    understand that for the Barangay to carry out its mandate pursuant to section 394(d)(6) of the Local Code
+    of 1991, they must necessarily process my personal information for essay identification of inhabitants
+    , as tool in planning and as an updated reference in the number of inhabitants in the Barangay.  Therefore, 
+    I grant my consent and recognize the authority of the Barangay to the process my personal information, subject
+    to the provision of the Philippine Data Privacy Act of 2012.
+</p>
+</div>
+    

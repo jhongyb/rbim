@@ -1,0 +1,158 @@
+{%extends 'barangay/Indicators.html' %}
+{% load crispy_forms_tags %}
+{%load static%}
+{%load bootstrap5%}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load humanize %}
+
+{%block rbim%}
+{% load humanize %}
+<div class="container">
+    <h4 style="padding: 10px;text-align: center;">{{brgy}}</h4>
+</div>
+<title>Summary of Data - Population Civil Status</title>
+    <script src="{% static 'js/chart.js' %}"></script>
+    <style>
+        .chart-card {
+            background-color: #ffffff;
+            border: 1px solid #dbe2ec;
+            border-radius: 4px;
+            padding: 30px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.02);
+            width: 100%;
+            max-width: 950px;
+        }
+        .header-group {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .main-title {
+            color: #002855;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin: 0 0 5px 0;
+        }
+        .sub-title {
+            color: #002855;
+            font-size: 19px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .canvas-wrapper {
+            position: relative;
+            height: 480px;
+            width: 100%;
+            background-color: #b9cee6; /* Light blue plot area background */
+            padding: 25px 15px 15px 15px; 
+            border-radius: 4px; 
+            border: 1px solid #2c3e50;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chart-card" style="position: relative; width: 100%;  margin: 0 auto;margin-top: 2%;">
+    <div class="header-group">
+        <h1 class="main-title">SUMMARY OF DATA</h1>
+        <h2 class="sub-title">POPULATION CIVIL STATUS</h2>
+    </div>
+    <div class="canvas-wrapper">
+        <canvas id="civilStatusChart"></canvas>
+    </div>
+</div>
+
+<script>
+    // Safe-inject arrays from Django backend context
+    const civilLabels = {{ civil_labels|safe }};
+    const civilValues = {{ civil_values|safe }};
+
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        // Custom Plugin 1: Generates the 3D-like diagonal drop shadow blocks
+        const barShadowPlugin = {
+            id: 'barShadow',
+            beforeDatasetsDraw(chart) {
+                const { ctx } = chart;
+                ctx.save();
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = 12;
+                ctx.shadowOffsetY = 10;
+            },
+            afterDatasetsDraw(chart) {
+                chart.ctx.restore();
+            }
+        };
+
+        // Custom Plugin 2: Injects large absolute totals right above each corresponding column
+        const valueLabelsPlugin = {
+            id: 'absoluteValueLabels',
+            afterDraw: (chart) => {
+                const { ctx, data } = chart;
+                ctx.save();
+                ctx.font = 'bold 24px Arial';
+                ctx.fillStyle = '#000000';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                
+                chart.getDatasetMeta(0).data.forEach((bar, index) => {
+                    const value = data.datasets[0].data[index];
+                    // Draws the total value 8 pixels above the top edge of the bar
+                    ctx.fillText(value, bar.x, bar.y - 8);
+                });
+                ctx.restore();
+            }
+        };
+
+        const ctxCivil = document.getElementById('civilStatusChart').getContext('2d');
+        new Chart(ctxCivil, {
+            type: 'bar',
+            data: {
+                labels: civilLabels,
+                datasets: [{
+                    data: civilValues,
+                    backgroundColor: '#4472c4', // Steel Blue
+                    borderColor: '#2f5597',
+                    borderWidth: 1,
+                    barThickness: 75 // Forces explicit uniform column thickness
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        top: 30 // Padding ensures top values don't get clipped by the chart boundary
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: true }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        border: { color: '#2c3e50', width: 2 }, // Clean bottom baseline
+                        ticks: {
+                            color: '#000000',
+                            font: { size: 13, weight: 'bold' }
+                        }
+                    },
+                    y: {
+                        display: false, // Hides background vertical gridlines completely
+                        grid: { display: false },
+                        suggestedMax: Math.max(...civilValues) * 1.15 
+                    }
+                }
+            },
+            plugins: [barShadowPlugin, valueLabelsPlugin]
+        });
+
+    });
+</script>
+</body>
+
+{%endblock%}

@@ -1,0 +1,45 @@
+{%extends 'base.html' %}
+{% load crispy_forms_tags %}
+{%load static%}
+{%load bootstrap5%}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load humanize %}
+{%block main%}
+
+{%block rbim%}
+{% load humanize %}
+           <div class="row mb-2">
+                <div class="col-4">
+                    <form method="post" class="col d-block flex-nowrap justify-content-end d-sm-flex " style>
+                        {% csrf_token %} 
+                        <input type="search" class="form-control m-2" name="txtsearch" placeholder="Barangay" style="background-color: transparent;">
+                        <button class="btn btn-outline-primary m-2" type="submit"><i class="fas fa-search fa-lg"></i></button>
+                    </form>
+                </div>
+            </div>
+{%for i in brgy%}
+
+<div class="container m-5">
+<h4 class="header">{{i}}</h4>
+<ul>
+    <li class="nav-item"><a href="{%url 'populationbysex' pk=i %}" class="nav-link"> Summary of Population by Sex</a> </li>
+    <li class="nav-item"><a href="{% url 'populationbycivilstatus' pk=i%}" class="nav-link"> Summary of Population by Civil Status</a> </li>
+    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Religion</a> </li>
+    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Ethnicity</a> </li>
+    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Sex</a> </li>
+    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Sex</a> </li>
+    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Sex</a> </li>
+</ul>
+</div>
+{%endfor%}
+
+
+
+
+
+{%endblock%}
+
+
+
+{%endblock%}

@@ -23,6 +23,9 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab6" type="button" role="tab">F. CTC & SKILLS DEVELOPEMENT </button>
         </li>
+                <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab7" type="button" role="tab">G. RBI OTHER INFORMATIONS </button>
+        </li>
     </ul>
  <div class= "tab-content border border-top-0 p-3" style="overflow-x: scroll; min-height: 650px;">
     <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
@@ -404,12 +407,52 @@
                     </tr>
                     {%endfor%}
                 </tr>
-          
-            <tbody>
-
-            </tbody>
         </table>
-       
+
+    </div>
+    <div class="tab-pane fade show" id="tab7" role="tabpanel" aria-labelledby="tab7-tab">
+            <table class="table table-bordered table-hover">
+                  <tr>
+                    <td>PhilSys Card No</td>
+                    <td>Occupation</td>
+                    <td>Contact No</td>
+                    <td>Email</td>
+                    <td>Sector(RBI)</td>
+                    <td>Photo</td>
+                    <td>Left Thumb</td>
+                    <td>Right Thumb</td>
+                    <td style="color: darkred;"><i class="fas fa-trash"></i></td>
+                </tr>
+                </thead>
+                        <tr>
+    {%for form in formset.forms%}
+                        <tr>
+                            <td>
+                            {{form.id}}
+                            {%for h in form.hidden_fields%}
+                            {{h}}
+                            {%endfor%}
+                            {{form.philsysno}}
+                            {{form.philsysno.errors}}
+                            </td>
+                            <td>{{form.occupation}}{{form.occupation.errors}}</td>
+                            <td>{{form.contactno}}{{form.contactno.errors}}</td>
+                            <td>{{form.email}}{{form.email.errors}}</td>
+                            <td>{{form.rbisector}}{{form.rbisector.errors}}</td>
+                            <td>{{form.photo}}{{form.photo.errors}}</td>
+                            <td>{{form.leftthumb}}{{form.leftthumb.errors}}</td>  
+                            <td>{{form.rightthumb}}{{form.rightthumb.errors}}</td>                 
+                            <td>
+                            {% if formset.can_delete %}
+                                {{ form.DELETE }}
+                            {% endif %}
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tr>
+            
+            </table>
+        
     </div>
  </div>
  <br>
@@ -420,7 +463,7 @@
             </div>
         </div>
     </form>
-</div>
+    </div>
 <style>
         .form-select,.form-control{min-width:200px;}
 </style>
