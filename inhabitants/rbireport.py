@@ -112,7 +112,7 @@ def long_landscape(html):
             'title':"ITEM REPORT",
             'footer-Font-size':'8',
        }
-       config =pdfkit.configuration(wkhtmltopdf='.\static\wkhtmltopdf.exe') 
+       config =pdfkit.configuration(wkhtmltopdf='./static/wkhtmltopdf') 
        pdf = pdfkit.from_string(html, False, configuration=config, 
        options=options)
        response = HttpResponse(pdf, content_type='application/pdf')

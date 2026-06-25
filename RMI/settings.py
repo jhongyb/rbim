@@ -14,6 +14,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
     'bootstrap5',
     'crispy_forms',
     'crispy_bootstrap5',
@@ -24,6 +26,7 @@ INSTALLED_APPS = [
     'rbi',
     'inhabitants',
     'brgy',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -110,6 +113,7 @@ MESSAGE_TAGS={
     messages.ERROR:'danger',
     messages.SUCCESS:'success',
 }
-WKHTMLTOPDF_CMD =os.path.join(STATIC_URL,'wkhtmltopdf.exe')
+WKHTMLTOPDF_CMD =os.path.join(STATIC_URL,'wkhtmltopdf')
+CSRF_TRUSTED_ORIGINS=['https://rbim.ictbagumbayan.us']
 IMPORT_EXPORT_SKIP_ADMIN_LOG = True
 IMPORT_EXPORT_ENCODING = 'utf-8-sig'

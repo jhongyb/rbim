@@ -122,7 +122,7 @@ class Inhabitants(models.Model):
         q22b=models.IntegerField(default=0,blank=True,null=True)
         q23=models.ForeignKey(FPMethod,on_delete=models.SET_NULL,blank=True,null=True)
         q24=models.ForeignKey(SourceFP,on_delete=models.SET_NULL,blank=True,null=True)
-        q25a=models.CharField(max_length=3,choices=[('yes','1 YES'),('no','1 NO')],default='no',blank=True,null=True)
+        q25a=models.CharField(max_length=3,choices=[('yes','1 YES'),('no','2 NO')],default='no',blank=True,null=True)
         q25b=models.CharField(max_length=100,blank=True,null=True)
         q26=models.ForeignKey(HealthInsurance,on_delete=models.SET_NULL,blank=True,null=True)
         q27=models.ForeignKey(FacilityVisited,on_delete=models.SET_NULL,blank=True,null=True)

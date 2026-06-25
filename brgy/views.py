@@ -24,10 +24,10 @@ def RBIformc(request,b):
 
 @login_required()
 def rbimindicators(request):
-    brgy=Barangay.objects.all()
+    brgy=Barangay.objects.all().order_by('id')
     if request.method=='POST':
         cri=request.POST['txtsearch']
-        brgy=Barangay.objects.filter(Q(name__icontains=cri))
+        brgy=Barangay.objects.filter(Q(name__icontains=cri)).order_by('id')
     context={'brgy':brgy}
     return render(request,'barangay/indicators.html',context)
 
