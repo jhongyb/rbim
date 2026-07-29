@@ -11,7 +11,7 @@ from rbi.access import barangay_access,userbrgy
 @login_required
 @barangay_access(redirect_url='/home')
 def households(request):
-    print(userbrgy(request.user))
+    # print(userbrgy(request.user))
     return render(request,'households/household.html')
 
 @login_required
@@ -72,7 +72,7 @@ def household_delete(request,pk):
 @login_required
 def householdlist(request):
     data=Households.objects.all()
-    if not request.user.username == 'admin':
+    if request.user.username not in ["admin","mswd"]:
         b=userbrgy(request.user)
         data=Households.objects.filter(barangay__in=b)
         if request.method=='POST':
@@ -86,7 +86,7 @@ def householdlist(request):
 
 @login_required
 def inhabitantslist(request):
-    if not request.user.username == 'admin':
+    if request.user.username not in ["admin","mswd"]:
         data=Inhabitants.objects.select_related('hh').annotate(
                                         hhno=F('hh__household_no'),sx=F('sex__description'),purok=F('hh__purok')
                                         ,brgy=F('hh__barangay__name'),brgyid=F('hh__barangay__id'),pk=F('pk')).values('pk',

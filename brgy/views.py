@@ -7,7 +7,7 @@ from rbi.access import userbrgy
 
 @login_required()
 def RBIbarangay(request):
-    if not request.user.username == 'admin':
+    if request.user.username not in ["admin","mswd"]:
         inha=Barangay.objects.annotate(hh=Count('brgy',distinct=True),inh=Count('brgy__household_inhabitants',distinct=True)).filter(id__in=userbrgy(request.user))
     else:
         inha=Barangay.objects.annotate(hh=Count('brgy',distinct=True)
