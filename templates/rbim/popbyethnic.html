@@ -11,7 +11,7 @@
 <div class="container">
     <h1 style="padding: 10px;text-align: center;">{{brgy}}</h1>
 </div>
-<title>Summary of Data - Population Civil Status</title>
+<title>Summary of Data - Ethnicity</title>
     <script src="{%static 'js/chart.js'%}"></script>
     <style>
         .chart-card {
@@ -57,17 +57,107 @@
 <div class="chart-card" style="position: relative; width: 100%;  margin: 0 auto;margin-top: 2%;">
     <div class="header-group">
         <h1 class="main-title">SUMMARY OF DATA</h1>
-        <h2 class="sub-title">POPULATION CIVIL STATUS</h2>
+        <h2 class="sub-title">POPULATION BY ETHNICITY</h2>
     </div>
     <div class="canvas-wrapper">
-        <canvas id="civilStatusChart"></canvas>
+        <canvas id="relChart"></canvas>
     </div>
 </div>
-
 <script>
     // Safe-inject arrays from Django backend context
-    const civilLabels = {{ civil_labels|safe }};
-    const civilValues = {{ civil_values|safe }};
+    const relLabels = {{ rel_labels|safe }};
+    const relValues = {{ rel_values|safe }};
+
+    document.addEventListener("DOMContentLoaded", function() {
+    
+        // Custom Plugin 1: Generates 3D-like diagonal drop shadow blocks
+        const barShadowPlugin = {
+            id: 'barShadow',
+            beforeDatasetsDraw(chart) {
+                const { ctx } = chart;
+                ctx.save();
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+                ctx.shadowBlur = 8;
+                ctx.shadowOffsetX = 8;
+                ctx.shadowOffsetY = 6;
+            },
+            afterDatasetsDraw(chart) {
+                chart.ctx.restore();
+            }
+        };
+
+        // Custom Plugin 2: Injects value totals directly to the right of each horizontal bar
+        const valueLabelsPlugin = {
+            id: 'absoluteValueLabels',
+            afterDraw: (chart) => {
+                const { ctx, data } = chart;
+                ctx.save();
+                ctx.font = 'bold 12px Arial';
+                ctx.fillStyle = '#000000';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                
+                chart.getDatasetMeta(0).data.forEach((bar, index) => {
+                    const value = data.datasets[0].data[index];
+                    // Draws the value 8 pixels to the right of the bar edge
+                    ctx.fillText(value, bar.x + 8, bar.y);
+                });
+                ctx.restore();
+            }
+        };
+        const ctxEthnicity = document.getElementById('relChart').getContext('2d');
+        new Chart(ctxEthnicity, {
+            type: 'bar',
+            data: {
+                labels: relLabels,
+                datasets: [{
+                    data: relValues,
+                    backgroundColor: '#8ea9db', // Light slate blue matching your image
+                    borderColor: '#2f5597',
+                    borderWidth: 1,
+                    barThickness: 12 // Keeps bars thin given the large number of categories
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Swaps axes to make the bar chart horizontal
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        right: 50 // Extra spacing on the right so large text (e.g., 5132) isn't clipped
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: true }
+                },
+                scales: {
+                    x: {
+                        display: false, // Hides background vertical gridlines
+                        grid: { display: false },
+                        suggestedMax: Math.max(...relValues) * 1.12 
+                    },
+                    y: {
+                        grid: { display: false },
+                        border: { color: '#2c3e50', width: 2 }, // Baseline axis line
+                        ticks: {
+                            color: '#000000',
+                            font: { size: 11, weight: 'bold' }
+                        }
+                    }
+                }
+            },
+            plugins: [barShadowPlugin, valueLabelsPlugin]
+        });
+
+    });
+</script>
+
+
+<!-- <script>
+    // Safe-inject arrays from Django backend context
+    const civilLabels = {{ rel_labels|safe }};
+    const civilValues = {{ rel_values|safe }};
 
     document.addEventListener("DOMContentLoaded", function() {
         
@@ -152,7 +242,7 @@
         });
 
     });
-</script>
+</script> -->
 </body>
 
 {%endblock%}

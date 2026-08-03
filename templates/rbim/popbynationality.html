@@ -1,0 +1,140 @@
+{%extends 'barangay/indicators.html' %}
+{% load crispy_forms_tags %}
+{%load static%}
+{%load bootstrap5%}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load humanize %}
+
+{%block main%}
+{% load humanize %}
+<div class="container">
+    <h1 style="padding: 10px;text-align: center;">{{brgy}}</h1>
+</div>
+<title>Summary of Data - Population by Sex</title>
+<script src="{%static 'js/chart.js'%}"></script>
+<script src="{%static 'js/chartlabel.js'%}"></script>
+    <style>
+        .chart-container {
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+        }
+        .chart-title {
+            text-align: center;
+            color: #002855;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        .chart-subtitle {
+            text-align: center;
+            color: #002855;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+
+<div style="position: relative; height: 60vh; width: 100%; max-width: 900px; margin: 0 auto;margin-top: 2%;">
+    <div class="chart-title">Summary of Data</div>
+    <div class="chart-subtitle">Population by Nationality</div>
+    <canvas id="nationality"></canvas>
+</div>
+
+<script>
+    const natLabels = {{ nat_labels|safe }};
+    const natValues = {{ nat_values|safe }};
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('nationality').getContext('2d');
+
+        // Register the DataLabels plugin for slice labels inside/outside pie
+        Chart.register(ChartDataLabels);
+
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: natLabels,
+                datasets: [{
+                    data: natValues,
+                    backgroundColor: [
+                        '#8ba4d9', // Blue for FILIPINO
+                        '#f59e6c', // Orange/Salmon for NON-FILIPINO
+                        '#6c757d', // Fallback for extra categories
+                        '#20c997'
+                    ],
+                    borderColor: '#111111',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+legend: {
+        position: 'bottom',
+        labels: {
+            color: '#ffffff',
+            font: { size: 12, weight: 'bold' },
+            padding: 15,
+            boxWidth: 12,
+            // Custom label text renderer
+            generateLabels: function(chart) {
+                const data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                    return data.labels.map((label, i) => {
+                        const meta = chart.getDatasetMeta(0);
+                        const style = meta.controller.getStyle(i);
+                        const value = data.datasets[0].data[i];
+                        
+                        return {
+                            // Customize how the text appears here:
+                            text: `${label}: ${value}`, 
+                            fillStyle: style.backgroundColor,
+                            strokeStyle: style.borderColor,
+                            lineWidth: style.borderWidth,
+                            hidden: meta.data[i].hidden,
+                            index: i
+                        };
+                    });
+                }
+                return [];
+            }
+        }
+    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                return `${label}: ${value}`;
+                            }
+                        }
+                    },
+                    // Renders labels with values (e.g. "FILIPINO, 5573") on the chart
+                    datalabels: {
+                        color: '#ffffff',
+                        backgroundColor: '#000000',
+                        borderColor: '#ffffff',
+                        borderWidth: 1,
+                        borderRadius: 2,
+                        font: { weight: 'bold', size: 11 },
+                        padding: 4,
+                        formatter: function(value, context) {
+                            const label = context.chart.data.labels[context.dataIndex];
+                            return `${label}, ${value}`;
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{%endblock%}

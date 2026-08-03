@@ -20,26 +20,23 @@
             </div>
 {%for i in brgy%}
 
-<div class="container m-5">
+<div class="container m-5" style="margin: auto;width: 100%;">
 <h4 class="header">{{i}}</h4>
 <ul>
     <li class="nav-item"><a href="{%url 'populationbysex' pk=i %}" class="nav-link"> Summary of Population by Sex</a> </li>
     <li class="nav-item"><a href="{% url 'populationbycivilstatus' pk=i%}" class="nav-link"> Summary of Population by Civil Status</a> </li>
-    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Religion</a> </li>
-    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Ethnicity</a> </li>
-    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Sex</a> </li>
-    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Sex</a> </li>
-    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Sex</a> </li>
+    <li class="nav-item"><a href="{% url 'populationbyreligion' pk=i%}" class="nav-link"> Summary of Population by Religion</a> </li>
+    <li class="nav-item"><a href="{% url 'populationbyethnicity' pk=i%}" class="nav-link"> Summary of Population by Ethnicity</a> </li>
+    <li class="nav-item"><a href="{% url 'populationbynationality' pk=i%}" class="nav-link"> Summary of Population by Nationality</a> </li>
+    <li class="nav-item"><a href="{% url 'populationbyhigheducation' pk=i%}" class="nav-link"> Summary of Population by Highest Level of Education 5 years and above</a> </li>
+    <li class="nav-item"><a href="" class="nav-link"> Summary of Population by Current Enrolled (3-24 years old)</a> </li>
+    <li class="nav-item"><a href="" class="nav-link"> Summary of Students in Every School</a> </li>
 </ul>
 </div>
 {%endfor%}
 
-
-
-
-
+<style>
+    .container m-5, li a:hover{text-decoration: underline;font-weight: bolder;}
+</style>
 {%endblock%}
-
-
-
 {%endblock%}
